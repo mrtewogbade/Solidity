@@ -3,13 +3,37 @@ pragma solidity  0.8.19; // stating our version
 
 
 contract SimpleStorage {
-    // Basic Types: boolean, uint, int, address, bytes
 
-    bool hasFavoriteNumber = false;
+    // favoriteNumber get assigned to 0 if no value is given 
 
-    int256 favoriteNumber = -88;
-    string favoriteNumberInText = "88";
-    address myAddress = 0x62a87c1B3ebB21899Cd029337dD3505BE7874449;
-    bytes32 favoriteBytes32 = 'cat';
+    uint256 myFavoriteNumber; // 0
+
+    struct Person {
+        uint256 favoriteNumber;
+        string name;
+    }
+
+
+    Person[] public listOfPeople;
+
+
+    function store(uint256 _favoriteNumber) public{
+        myFavoriteNumber = _favoriteNumber;
+    }
+
+    // view, pure
+    function retrieve() public view returns(uint256){
+        return myFavoriteNumber;
+    }
+    mapping(string => uint256) public nameToFavoriteNumber;
+    //Calldata, memory storage
+
+    function addPerson(string memory _name, uint256 _favoriteNumber) public{
+        listOfPeople.push(Person(_favoriteNumber, _name));
+        nameToFavoriteNumber[_name] = _favoriteNumber;
+    }
+ 
 
 }
+
+
